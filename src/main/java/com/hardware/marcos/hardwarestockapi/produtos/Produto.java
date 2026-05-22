@@ -20,6 +20,15 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(of = "id") // Compara objetos usando apenas o ID (Lombok)
 public class Produto {
 
+    public Produto(DadosCadastroProduto dados) {
+        this.nome = dados.nome();
+        this.descricao = dados.descricao();
+        this.preco = dados.preco();
+        this.quantidade = dados.quantidade();
+        this.sku = dados.sku();
+        this.categoria = dados.categoria();
+    }
+
     @Id  // Define o atributo como chave primária da tabela
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
