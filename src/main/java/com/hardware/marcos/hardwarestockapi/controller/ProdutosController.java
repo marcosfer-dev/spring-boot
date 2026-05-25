@@ -3,6 +3,7 @@ package com.hardware.marcos.hardwarestockapi.controller;
 import com.hardware.marcos.hardwarestockapi.produtos.DadosCadastroProduto;
 import com.hardware.marcos.hardwarestockapi.produtos.Produto;
 import com.hardware.marcos.hardwarestockapi.produtos.ProdutoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class ProdutosController {
     private ProdutoRepository repository;
 
     @PostMapping
-    public void cadastrar(@RequestBody DadosCadastroProduto dados) {
+    public void cadastrar(@RequestBody @Valid DadosCadastroProduto dados) {
         repository.save(new Produto(dados));
     }
 
