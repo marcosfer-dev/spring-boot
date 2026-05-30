@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -35,9 +36,27 @@ public class Produto {
     private String nome;
     private String descricao;
     private BigDecimal preco;
-    private int quantidade;
+    private Integer quantidade;
     private String sku;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+    public void atualizarInformacoes(@Valid DadosAtualizarProduto dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+
+        if (dados.preco() != null) {
+            this.preco = dados.preco();
+        }
+
+        if (dados.quantidade() != null) {
+            this.quantidade = dados.quantidade();
+        }
+
+        if (dados.descricao() != null) {
+            this.descricao = dados.descricao();
+        }
+    }
 }

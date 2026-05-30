@@ -20,7 +20,7 @@ public record DadosCadastroProduto(
         BigDecimal preco,
 
         @PositiveOrZero
-        int quantidade,
+        Integer quantidade,
 
         @NotBlank
         String sku,
