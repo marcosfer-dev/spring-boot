@@ -28,6 +28,7 @@ public class Produto {
         this.quantidade = dados.quantidade();
         this.sku = dados.sku();
         this.categoria = dados.categoria();
+        this.ativo = true;
     }
 
     @Id  // Define o atributo como chave primária da tabela
@@ -41,6 +42,8 @@ public class Produto {
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+    private Boolean ativo;
 
     public void atualizarInformacoes(@Valid DadosAtualizarProduto dados) {
         if (dados.nome() != null) {
@@ -58,5 +61,13 @@ public class Produto {
         if (dados.descricao() != null) {
             this.descricao = dados.descricao();
         }
+    }
+
+    public void inativar() {
+        this.ativo = false;
+    }
+
+    public void reativar() {
+        this.ativo = true;
     }
 }

@@ -23,19 +23,33 @@ public class ProdutosController {
 
     @GetMapping
     public List<DadosListagemProduto> listar() {
-        return repository.findAll().stream().map(DadosListagemProduto::new).toList();
+        return repository.findAllByAtivoTrue().stream().map(DadosListagemProduto::new).toList();
     }
 
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizarProduto dados) {
-        var remedio = repository.getReferenceById(dados.id());
-        remedio.atualizarInformacoes(dados);
+        var produto = repository.getReferenceById(dados.id());
+        produto.atualizarInformacoes(dados);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public void excluir(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    @DeleteMapping("inativar/{id}")
+    @Transactional
+    public void inativar(@PathVariable Long id) {
+        var produto = repository.getReferenceById(id);
+        produto.inativar();
+    }
+
+    @PutMapping("/reativar/{id}")
+    @Transactional
+    public void reativar(@PathVariable Long id) {
+        var produto = repository.getReferenceById(id);
+        produto.reativar();
     }
 }
