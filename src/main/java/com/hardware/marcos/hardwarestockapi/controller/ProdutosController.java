@@ -2,6 +2,7 @@ package com.hardware.marcos.hardwarestockapi.controller;
 
 import com.hardware.marcos.hardwarestockapi.produtos.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,5 +70,12 @@ public class ProdutosController {
         produto.reativar();
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosDetalhamentoProduto> detalhar(@PathVariable Long id) {
+        var produto = repository.getReferenceById(id);
+
+        return ResponseEntity.ok(new DadosDetalhamentoProduto(produto));
     }
 }
