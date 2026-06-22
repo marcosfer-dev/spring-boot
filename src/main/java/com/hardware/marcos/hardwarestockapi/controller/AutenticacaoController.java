@@ -1,5 +1,6 @@
 package com.hardware.marcos.hardwarestockapi.controller;
 
+import com.hardware.marcos.hardwarestockapi.infra.DadosTokenJWT;
 import com.hardware.marcos.hardwarestockapi.infra.TokenService;
 import com.hardware.marcos.hardwarestockapi.usuarios.DadosAutenticacao;
 import com.hardware.marcos.hardwarestockapi.usuarios.Usuario;
@@ -27,7 +28,8 @@ public class AutenticacaoController {
     public ResponseEntity<?> efetutarLogin(@RequestBody @Valid DadosAutenticacao dados) {
         var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var autenticacao = manager.authenticate(token);
-        return ResponseEntity.ok(tokenService.gerarToken((Usuario) autenticacao.getPrincipal()));
+        var tokenJWT = tokenService.gerarToken((Usuario) autenticacao.getPrincipal());
+        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
 
 }
