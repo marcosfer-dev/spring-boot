@@ -1,6 +1,8 @@
 package com.hardware.marcos.hardwarestockapi.controller;
 
+import com.hardware.marcos.hardwarestockapi.infra.TokenService;
 import com.hardware.marcos.hardwarestockapi.usuarios.DadosAutenticacao;
+import com.hardware.marcos.hardwarestockapi.usuarios.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,14 @@ public class AutenticacaoController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity<?> efetutarLogin(@RequestBody @Valid DadosAutenticacao dados) {
         var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var autenticacao = manager.authenticate(token);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(tokenService.gerarToken((Usuario) autenticacao.getPrincipal()));
     }
 
 }
