@@ -23,7 +23,8 @@ public class SecurityFilter extends OncePerRequestFilter {
     private UsuarioRepository repository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         var tokenJWT = recuperarToken(request);
 
@@ -44,7 +45,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var authorizationHeader = request.getHeader("Authorization");
 
         if (authorizationHeader != null) {
-            return authorizationHeader;
+            return authorizationHeader.replace("Bearer ", "");
         }
 
         return null;
